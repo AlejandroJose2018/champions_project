@@ -1,35 +1,23 @@
 import 'dart:async';
-import 'package:sqljocky5/sqljocky.dart';
+import '../aqueduct_app.dart';
 
-class DbHelper {
-  factory DbHelper() {
-    return _singleton;
+class MyApplicationChannel extends ApplicationChannel {
+  ManagedContext context;
+
+  @override
+  Future prepare() async {
+    final dataModel = ManagedDataModel.fromCurrentMirrorSystem();
+    final psc = PostgreSQLPersistentStore.fromConnectionInfo(
+        "my_app_name_user",
+        "password",
+        "localhost",
+        5432,
+        "my_app_name");
+
+    context = ManagedContext(dataModel, psc);
   }
 
-  DbHelper._internal() {
-    print("Opening mysql connection");
+  @override
+  Controller get entryPoint => null;
 
-    final connectionSettings = ConnectionSettings(
-      user: "root",
-      password: "dart_jaguar",
-      host: "localhost",
-      port: 3306,
-      db: "example",
-    );
-    MySqlConnection.connect(connectionSettings);
-  }
-
-  static final DbHelper _singleton = DbHelper._internal();
-  MySqlConnection mySqlConnection;
-
-  void closeConnection() {
-    print("Closing connection");
-    mySqlConnection.close();
-  }
-
-  Future<Results> runRawQuery(String query) async {
-    final Results results = await mySqlConnection
-        .execute(query);
-    return results;
-  }
 }
