@@ -1,23 +1,24 @@
 import 'dart:async';
 import '../aqueduct_app.dart';
+import 'my_configuration.dart';
 
-class MyApplicationChannel extends ApplicationChannel {
+class DbHelper {
+
   ManagedContext context;
+  ApplicationOptions applicationOptions;
 
-  @override
-  Future prepare() async {
+  void start() {
+    final config = MyConfiguration(applicationOptions.configurationFilePath);
+
     final dataModel = ManagedDataModel.fromCurrentMirrorSystem();
     final psc = PostgreSQLPersistentStore.fromConnectionInfo(
-        "my_app_name_user",
-        "password",
-        "localhost",
-        5432,
-        "my_app_name");
+        config.database.username,
+        config.database.password,
+        config.database.host,
+        config.database.port,
+        config.database.databaseName);
 
     context = ManagedContext(dataModel, psc);
   }
-
-  @override
-  Controller get entryPoint => null;
 
 }

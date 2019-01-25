@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:aqueduct/aqueduct.dart';
-import '../models/role.dart';
-import 'package:sqljocky5/sqljocky.dart';
+import 'package:aqueduct_app/models/orm_models/role.dart';
 
 class RolesController extends ResourceController {
 
@@ -10,21 +9,16 @@ class RolesController extends ResourceController {
     List<Role> roles = List();
 
     Role assassinRole = Role();
-    assassinRole.roleId = 1;
+    assassinRole.id = 1;
     assassinRole.name = 'Assassin';
 
     roles.add(assassinRole);
 
     Role casterRole = Role();
-    casterRole.roleId = 2;
+    casterRole.id = 2;
     casterRole.name = 'Caster';
 
     roles.add(casterRole);
-
-    print('trying to get all roles');
-
-    String jsonResult = jsonEncode(roles);
-    print(jsonResult);
 
     return Response.ok(jsonEncode(roles[0]));
   } 

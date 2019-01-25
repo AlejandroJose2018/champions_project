@@ -1,5 +1,5 @@
 import 'package:aqueduct/aqueduct.dart';
-import '../models/champion.dart';
+import 'package:aqueduct_app/models/orm_models/champion.dart';
 import '../services/champions_service.dart';
 
 class ChampionsController extends ResourceController { 
