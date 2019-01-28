@@ -6,12 +6,16 @@ class ChampionsController extends ResourceController {
   final ChampionsService championsService = ChampionsService();
 
   @Operation.get()
-  Future<List<Champion>> getAllChampions() async {
-    return championsService.getChampions();
+  Future<Response> getAllChampions() async {
+    final object = championsService.getChampions();
+    final map = object.asStream();
+    final response = Response.ok(map);
+    return response;
   }
 
   @Operation.get('id')
-  Future<Champion> getChampion(@Bind.path('id') int id) async {
-    return championsService.getChampion(id);
+  Future<Response> getChampion(@Bind.path('id') int id) async {
+    final Champion champion = await championsService.getChampion(id);
+    return Response.ok(champion.asMap());
   }
 }

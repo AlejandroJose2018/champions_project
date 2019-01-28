@@ -4,10 +4,28 @@ import 'my_configuration.dart';
 
 class DbHelper {
 
-  ManagedContext context;
+  /* CONSTRUCTORS */
+
+  factory DbHelper() {
+    return _singleton;
+  }
+
+  DbHelper._internal();
+
+  /* GLOBAL */
+
+  static final DbHelper _singleton = DbHelper._internal();
+  ManagedContext _managedContext;
   ApplicationOptions applicationOptions;
 
-  void start() {
+  /* PUBLIC METHODS */
+
+  ManagedContext getManagedContext() {
+    return _managedContext;
+  }
+
+  /* PRIVATE METHODS */
+  void _initializeManagedContext() {
     final config = MyConfiguration(applicationOptions.configurationFilePath);
 
     final dataModel = ManagedDataModel.fromCurrentMirrorSystem();
@@ -18,7 +36,6 @@ class DbHelper {
         config.database.port,
         config.database.databaseName);
 
-    context = ManagedContext(dataModel, psc);
+    _managedContext = ManagedContext(dataModel, psc);
   }
-
 }

@@ -12,6 +12,8 @@ class _Champion {
   String name;
   String description;
   String title;
+
+  @Relate(#champions, onDelete: DeleteRule.cascade, isRequired: true)
   Role role;
 
   ManagedSet<Skin> skins;

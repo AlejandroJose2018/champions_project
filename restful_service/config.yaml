@@ -1,6 +1,6 @@
 database:
-  username: bob
-  password: bobspassword
-  host: localhost
+  username: xoikqcjbaatfnt
+  password: 8bd9e30025b06a27db18caec3ff23595931ae221b6563befa2e76c98e3fbd33b
+  host: ec2-107-20-183-142.compute-1.amazonaws.com
   port: 5432
-  databaseName: my_app
+  databaseName: d955as1irlmdb2
